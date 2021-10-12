@@ -1,0 +1,30 @@
+{
+  "name": "gestionventas",
+  "version": "1.0.0",
+  "description": "Una API para la gestión de ventas",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerdomoV/gestionVentas.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PerdomoV/gestionVentas/issues"
+  },
+  "homepage": "https://github.com/PerdomoV/gestionVentas#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.10",
+    "nodemon": "^2.0.13"
+  }
+}
