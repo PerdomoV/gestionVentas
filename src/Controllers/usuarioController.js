@@ -2,6 +2,8 @@ require('../database/database.js')
 const Usuario = require('../Schemas/usuarioSchema.js');
 const bcrypt = require('bcrypt')
 
+const { ObjectId } = require('mongodb');
+
 module.exports = {
     mostrar: async (req, res) => {
         try{
@@ -76,6 +78,46 @@ module.exports = {
         }catch(e){
             console.error(e)
             return res.status(500).json({ message: e }) 
+        }
+    },
+
+    mostrar: async (req, res) => {
+        try{
+            console.log('id = ', req.params.id)
+                id = ObjectId(req.params.id)
+                let usuario = await Usuario.findOne({_id : id})
+                // console.log('suario = ', usuario)
+                if (!usuario) return res.status(404).json({mensaje: "Usuario NO encontrado"})
+                return res.status(200).json(usuario)
+                
+        }catch(e){
+            console.error(e)
+            return res.status(500).json({ message: e })
+        }
+    },
+
+    listar: async (req, res) => {
+        try{
+            let usuarios = await Usuario.find({})
+                //console.log(usuarios.length)
+                if (usuarios.length === 0) return res.status(404).json({mensaje: "NO hay usuarios registrados"})
+                listaUsuarios = []
+                usuarios.forEach((usuario) => { 
+                                            const item = {
+                                                "nombre": usuario["nombre"],
+                                                "rol" : usuario["rol"],
+                                                "cedula": usuario["cedula"],
+                                                "email" : usuario["email"],
+                                                "telefono" :usuario["telefono"]
+                                            }    
+
+                                            listaUsuarios.push(item)
+                                           });
+                return res.status(200).json(listaUsuarios)
+
+            }catch(e){
+            console.error(e)
+            return res.status(500).json({ message: e })
         }
     }
 }
