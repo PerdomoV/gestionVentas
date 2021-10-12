@@ -83,7 +83,7 @@ module.exports = {
 
     mostrar: async (req, res) => {
         try{
-            console.log('id = ', req.params.id)
+            // console.log('id = ', req.params.id)
                 id = ObjectId(req.params.id)
                 let usuario = await Usuario.findOne({_id : id})
                 // console.log('suario = ', usuario)

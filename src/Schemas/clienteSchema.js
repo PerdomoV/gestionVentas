@@ -1,17 +1,17 @@
 const { Schema, model } = require('mongoose')
 const { validateEmail } = require('../helpers/emailValidation.js')
 
-
-const usuarioSchema = new Schema(
+const clienteSchema = new Schema(
     {
         nombre: {
             type: String,
             required: true,
+            unique: true
         },
         cedula: {
             type: String,
             required: true,
-            unique: true
+            unique: true            
         },
         email: {
             type: String,
@@ -21,17 +21,7 @@ const usuarioSchema = new Schema(
             validate: [validateEmail, 'Please fill a valid email address'],
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor indtroduzca un email válido']
         },
-        password: {
-            type: String,
-            required: true
-        },
-        telefono:{
-            type: String,
-            required: true,
-            unique: false
-        },
-        
-        rol: {
+        telefono: {
             type: String,
             required: true,
         }
@@ -41,4 +31,4 @@ const usuarioSchema = new Schema(
     }
 );
 
-module.exports = model( 'Usuario', usuarioSchema )
+module.exports = model( 'Cliente', clienteSchema )

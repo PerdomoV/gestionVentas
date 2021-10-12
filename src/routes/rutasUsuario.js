@@ -1,8 +1,11 @@
 const { Router } = require("express")
 const usuarioController = require("../Controllers/usuarioController.js")
-
+const { validarId } = require("../middlewares/idValidation.js")
 
 const router = Router()
+
+router.use('/usuario/mostrar/:id', validarId )
+
 router.post('/usuario/crear', usuarioController.crear)
 router.post('/usuario/actualizar', usuarioController.actualizar)
 router.put('/usuario/borrar', usuarioController.borrar)
