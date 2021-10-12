@@ -18,8 +18,8 @@ const usuarioSchema = new Schema(
             required: true,
             lowercase: true,
             unique: true,
-            validate: [validateEmail, 'Please fill a valid email address'],
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor indtroduzca un email válido']
+            validate: [validateEmail, 'Por favor ingrese un email válido'],
+            //match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor indtroduzca un email válido']
         },
         password: {
             type: String,

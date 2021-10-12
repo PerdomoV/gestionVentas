@@ -19,7 +19,7 @@ const clienteSchema = new Schema(
             lowercase: true,
             unique: true,
             validate: [validateEmail, 'Please fill a valid email address'],
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor indtroduzca un email válido']
+            //match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor indtroduzca un email válido']
         },
         telefono: {
             type: String,

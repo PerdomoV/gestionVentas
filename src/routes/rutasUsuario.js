@@ -8,7 +8,7 @@ router.use('/usuario/mostrar/:id', validarId )
 
 router.post('/usuario/crear', usuarioController.crear)
 router.post('/usuario/actualizar', usuarioController.actualizar)
-router.put('/usuario/borrar', usuarioController.borrar)
+router.delete('/usuario/borrar', usuarioController.borrar)
 router.get('/usuario/mostrar/:id', usuarioController.mostrar)
 router.get('/usuario/listar', usuarioController.listar)
 
