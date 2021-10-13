@@ -19,5 +19,5 @@ app.use('/api', clienteRouter)
 
 
 app.listen(app.get('port'), () => {
-  console.log(`at port ${app.get('port')}`)
+  console.log(`Aplicacion corriendo en el puerto: ${app.get('port')}`)
 })

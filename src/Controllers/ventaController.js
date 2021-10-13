@@ -1,5 +1,5 @@
 require('../database/database.js')
-const Usuario = require('../Schemas/usuarioSchema.js');
+const Venta = require('../Schemas/usuarioSchema.js');
 const bcrypt = require('bcrypt')
 
 const { ObjectId } = require('mongodb');
@@ -7,9 +7,9 @@ const { ObjectId } = require('mongodb');
 module.exports = {
     mostrar: async (req, res) => {
         try{
-            const usuario = await Usuario.findById(req.user._id)
-            if(!usuario) return res.status(404).json({ message: "Usuario no encontrado"});
-            return res.status(401).json(usuario)
+            const venta = await Venta.findById(req.venta.id)
+            if(!venta) return res.status(404).json({ message: "Venta NO encontrada" });
+            return res.status(401).json(venta)
         }catch(e){
             console.error(e)
             return res.status(500).json({ message: "Internal server error"})
@@ -18,26 +18,29 @@ module.exports = {
 
     crear: async (req, res) => {
         try{
-            let {nombre, cedula, email, password, telefono, rol} = req.body
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(password, salt);
-            password = hash
-            let usuario = await Usuario({
-                                            nombre,
-                                            cedula, 
-                                            email,
-                                            password, 
-                                            telefono,
-                                            rol
-                                        }).save();
+            let {usuario, cliente, producto, cantidad, valor, estado, fecha_de_pago } = req.body
+            
+            let venta = new Venta({
+                                    usuario, 
+                                    cliente,
+                                    producto, 
+                                    cantidad, 
+                                    valor, 
+                                    estado,
+                                    fecha_de_pago
+                              });
+            
+            venta.fecha_de_pago instanceof Date;
 
-            if(!usuario) return res.status(500).json({message: "Error al crear usuario"}) 
-            return res.status(201).json({   "mensaje": "Se creó un nuevo usuario",
-                                            "nombre" : usuario["nombre"],
-                                            "rol" : usuario["rol"],
-                                            "cedula": usuario["cedula"],
-                                            "email" : usuario["email"],
-                                            "telefono" :usuario["telefono"],
+            if(!venta) return res.status(500).json({message: "Error al crear usuario"}) 
+            return res.status(201).json({   "mensaje": "Se creó una nueva venta",
+                                            "usuario": venta["usuario"],
+                                            "cliente": venta["cliente"],
+                                            "producto": venta["producto"],
+                                            "cantidad": venta["cantidad"],
+                                            "valor" : venta["valor"],
+                                            "estado": venta["estado"],
+                                            "fecha_de_pago": venta["fecha_de_pago"]
                                         })
         }catch(e) {
             console.error(e)
@@ -54,13 +57,13 @@ module.exports = {
 
             const filtro = {_id: id}
             const actualizacion = {nombre, cedula, email, password, telefono, rol}
-            const usuarioActualizado = await Usuario.findOneAndUpdate(filtro, actualizacion);
+            const usuarioActualizado = await Venta.findOneAndUpdate(filtro, actualizacion);
             
             console.log(usuarioActualizado)
             
             if(!usuarioActualizado) return res.status(500).json({ mensaje: "No se pudo actualizar el usuario" })
             
-            return res.status(201).json({message:'Usuario actualizado con éxito'})            
+            return res.status(201).json({message:'Venta actualizado con éxito'})            
         }catch(e){
             console.error(e)
             return res.status(500).json({ message: e })    
@@ -71,7 +74,7 @@ module.exports = {
         try {
             let { id } = req.body 
             filtro = {_id : id}
-            let borrado = await Usuario.deleteOne(filtro)
+            let borrado = await Venta.deleteOne(filtro)
             console.log(borrado)
             if(!borrado) return res.status(500).json({mensaje: "Error al borrar"})
             return res.status(200).json({mensaje: "Elemento borrado con exito"})
@@ -85,9 +88,9 @@ module.exports = {
         try{
             // console.log('id = ', req.params.id)
                 id = ObjectId(req.params.id)
-                let usuario = await Usuario.findOne({_id : id})
+                let usuario = await Venta.findOne({_id : id})
                 // console.log('suario = ', usuario)
-                if (!usuario) return res.status(404).json({mensaje: "Usuario NO encontrado"})
+                if (!usuario) return res.status(404).json({mensaje: "Venta NO encontrado"})
                 return res.status(200).json(usuario)
                 
         }catch(e){
@@ -98,7 +101,7 @@ module.exports = {
 
     listar: async (req, res) => {
         try{
-            let usuarios = await Usuario.find({})
+            let usuarios = await Venta.find({})
                 //console.log(usuarios.length)
                 if (usuarios.length === 0) return res.status(404).json({mensaje: "NO hay usuarios registrados"})
                 listaUsuarios = []

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+// este string tiene la inof de la conexion a la basede datos
+//"basededatos://servidordelabasededatos/nombredelabasededatos"
 const SERVER = "mongodb://localhost/gestion"
 
 mongoose.connect( SERVER,
